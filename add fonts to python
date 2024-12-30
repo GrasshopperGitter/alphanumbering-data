@@ -1,0 +1,45 @@
+rom PIL import Image, ImageDraw, ImageFont
+import os
+
+# Paths to fonts, adding downloaded fonts from fronts.google.com to my python in the virttual environment
+font_paths = [
+    "AnnieUseYourTelescope-Regular.ttf",
+    "Caveat-VariableFont_wght.ttf",
+    "Doto-VariableFont_ROND,wght.ttf",
+    "EduAUVICWANTDots-VariableFont_wght.ttf",
+    "IndieFlower-Regular.ttf",
+    "PlaywriteAUSA-VariableFont_wght.ttf",
+    "ReenieBeanie-Regular.ttf",
+    "VarelaRound-Regular.ttf",
+]
+
+# Create output directory
+output_dir = "font_examples"
+os.makedirs(output_dir, exist_ok=True)
+
+# Generate example images for each font
+for font_path in font_paths:
+    try:
+        # Extract font name from the file
+        font_name = os.path.basename(font_path).split(".")[0]
+
+        # Load the font
+        font = ImageFont.truetype(font_path, size=50)
+
+        # Create an image
+        img = Image.new("RGB", (300, 100), color="white")
+        draw = ImageDraw.Draw(img)
+
+        # Draw text with the font
+        text = "Hello, World!"
+        draw.text((10, 10), text, fill="black", font=font)
+
+        # Save the image
+        output_file = os.path.join(output_dir, f"{font_name}.png")
+        img.save(output_file)
+        print(f"Saved: {output_file}")
+    except Exception as e:
+        print(f"Failed to process {font_path}: {e}")
+
+print("Processing completed. Check the 'font_examples' directory for output files.")
+
