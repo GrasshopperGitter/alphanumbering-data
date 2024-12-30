@@ -1,0 +1,20 @@
+# Import the required library for converting numbers to words
+import inflect
+
+# Initialize the inflect engine for converting numbers to words
+engine = inflect.engine()
+
+# Open a file to save the data
+data_file = "number_words_dataset.txt" 
+#data_file is a string holding the name of file
+# We create the name of the file.
+# the file is saved in the current directory 
+with open(data_file, "w") as file: 
+    #opens the file specified by data_file in write mode ("w")
+    # Generate numbers from 0 to 1000 and convert them to words
+    for i in range(0, 1001):
+        word_representation = engine.number_to_words(i)  # Convert number to words
+        file.write(f"{i}: {word_representation}\n")  # Write the number and its word representation
+
+print(f"Data file '{data_file}' created successfully with numbers from 0 to 1000.")
+#Prints a message confirming that the file has been created successfully, including its name 
