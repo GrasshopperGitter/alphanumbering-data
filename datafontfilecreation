@@ -1,0 +1,47 @@
+from PIL import Image, ImageDraw, ImageFont
+import os
+
+# Paths to fonts
+font_paths = [
+    "AnnieUseYourTelescope-Regular.ttf",
+    "Caveat-VariableFont_wght.ttf",
+    "Doto-VariableFont_ROND,wght.ttf",
+    "EduAUVICWANTDots-VariableFont_wght.ttf",
+    "IndieFlower-Regular.ttf",
+    "PlaywriteAUSA-VariableFont_wght.ttf",
+    "ReenieBeanie-Regular.ttf",
+    "VarelaRound-Regular.ttf",
+]
+
+# Create output directory
+output_dir = "data_examples"
+os.makedirs(output_dir, exist_ok=True)
+
+# Generate dataset with numbers in different fonts
+for i in range(0, 101):  # Numbers from 0 to 100
+    for font_path in font_paths:
+        try:
+            # Extract font name from the file
+            font_name = os.path.basename(font_path).split(".")[0]
+
+            # Load the font
+            font = ImageFont.truetype(font_path, size=50)
+
+            # Create an image
+            img = Image.new("RGB", (300, 100), color="white")
+            draw = ImageDraw.Draw(img)
+
+            # Draw the number with the font
+            text = str(i)
+            draw.text((10, 10), text, fill="black", font=font)
+
+            # Save the image
+            font_output_dir = os.path.join(output_dir, font_name)
+            os.makedirs(font_output_dir, exist_ok=True)
+            output_file = os.path.join(font_output_dir, f"{i}.png")
+            img.save(output_file)
+            print(f"Saved: {output_file}")
+        except Exception as e:
+            print(f"Failed to process number {i} with font {font_path}: {e}")
+
+print("Dataset creation completed. Check the 'data_examples' directory for output files.")
